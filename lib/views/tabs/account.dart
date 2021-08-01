@@ -1,6 +1,7 @@
+import 'package:anime_dating_flutter/utils/colors.dart';
 import 'package:flutter/material.dart';
-import '../../widgets/review_card.dart';
-import '../../models/review.dart';
+import '../../widgets/message_card.dart';
+import '../../models/message.dart';
 import '../../utils/utils.dart';
 
 class AccountPage extends StatelessWidget {
@@ -12,15 +13,23 @@ class AccountPage extends StatelessWidget {
     final userImage = Positioned(
       top: deviceHeight * 0.09,
       left: deviceWidth * 0.28,
-      child: Container(
-        height: 180.0,
-        width: 180.0,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(AvailableImages.woman),
-            fit: BoxFit.cover,
+      child: Material(
+        elevation: 4.0,
+        shape: CircleBorder(),
+        child: Container(
+          height: 180.0,
+          width: 180.0,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(AvailableImages.woman),
+              fit: BoxFit.cover,
+            ),
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: primaryColor,
+              width: 5.0,
+            ),
           ),
-          shape: BoxShape.circle,
         ),
       ),
     );
@@ -41,7 +50,7 @@ class AccountPage extends StatelessWidget {
       child: _buildGradientCircle(40.0),
     );
 
-    final userNameAndLocation = Positioned(
+    final userNameAndNeighborhood = Positioned(
       top: deviceHeight * 0.38,
       left: 0,
       right: 0,
@@ -70,16 +79,17 @@ class AccountPage extends StatelessWidget {
           circle2,
           circle3,
           userImage,
-          userNameAndLocation
+          userNameAndNeighborhood
         ],
       ),
     );
 
     final br = Radius.circular(30.0);
 
-    final reviewList = reviews.map((review) => ReviewCard(review: review)).toList();
+    final messageList =
+        messages.map((message) => MessageCard(message: message)).toList();
 
-    final reviewsSection = Container(
+    final chatSection = Container(
       padding: EdgeInsets.only(top: 30.0, left: 30.0),
       width: double.infinity,
       decoration: BoxDecoration(
@@ -90,16 +100,19 @@ class AccountPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            "Your Reviews",
-            style: TextStyle(
-              color: Colors.black54,
-              fontSize: 18.0,
-              fontWeight: FontWeight.bold,
+          Container(
+            margin: EdgeInsets.only(bottom: 20.0),
+            child: Text(
+              "Your Recent Messages",
+              style: TextStyle(
+                color: Colors.black54,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           Column(
-            children: reviewList,
+            children: messageList,
           )
         ],
       ),
@@ -107,7 +120,7 @@ class AccountPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Container(
         child: Column(
-          children: <Widget>[userImageSection, reviewsSection],
+          children: <Widget>[userImageSection, chatSection],
         ),
       ),
     );

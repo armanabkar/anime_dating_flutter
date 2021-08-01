@@ -1,12 +1,13 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import '../router.dart';
-import '../models/resturant.dart';
+import '../models/character.dart';
 
-class ResturantCard extends StatelessWidget {
-  final Resturant resturant;
+class CharacterCardBig extends StatelessWidget {
+  final Character character;
+  final double width;
 
-  const ResturantCard({Key key, @required this.resturant}) : super(key: key);
+  const CharacterCardBig({Key key, @required this.character, this.width = 0.9})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -22,20 +23,20 @@ class ResturantCard extends StatelessWidget {
     );
 
     final _name = Text(
-      resturant.name,
+      character.name,
       style: TextStyle(
         color: Colors.white,
-        fontSize: 18.0,
+        fontSize: 24.0,
         fontWeight: FontWeight.bold,
       ),
     );
 
-    final _location = Row(
+    final _neighborhood = Row(
       children: <Widget>[
         Text(
-          resturant.location,
+          character.neighborhood,
           style: TextStyle(
-            fontSize: 12.0,
+            fontSize: 18.0,
             color: Colors.white60,
           ),
         ),
@@ -43,9 +44,9 @@ class ResturantCard extends StatelessWidget {
         _filledCircle,
         SizedBox(width: 5.0),
         Text(
-          resturant.type,
+          character.type,
           style: TextStyle(
-            fontSize: 12.0,
+            fontSize: 18.0,
             color: Colors.white60,
           ),
         ),
@@ -66,41 +67,33 @@ class ResturantCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[_name, _location],
+              children: <Widget>[_name, _neighborhood],
             ),
           ),
         ),
       ),
     );
 
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(
-          context,
-          resturantDetailsViewRoute,
-          arguments: resturant.id,
-        );
-      },
-      child: Stack(
-        children: <Widget>[
-          Hero(
-            tag: resturant.id,
-            child: Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              height: screenHeight * 0.4,
-              width: screenWidth * 0.45,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(resturant.photo),
-                  fit: BoxFit.cover,
-                ),
-                borderRadius: BorderRadius.circular(20.0),
+    return Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
+        Material(
+          borderRadius: BorderRadius.circular(20.0),
+          elevation: 4.0,
+          child: Container(
+            height: screenHeight * 0.6,
+            width: screenWidth * width,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(character.image),
+                fit: BoxFit.cover,
               ),
+              borderRadius: BorderRadius.circular(20.0),
             ),
           ),
-          _details
-        ],
-      ),
+        ),
+        _details
+      ],
     );
   }
 }

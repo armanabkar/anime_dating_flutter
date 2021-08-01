@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:anime_dating_flutter/router.dart';
-import '../models/review.dart';
+import '../models/message.dart';
 
-class ReviewCard extends StatelessWidget {
-  final Review review;
+class MessageCard extends StatelessWidget {
+  final Message message;
 
-  const ReviewCard({Key key, @required this.review}) : super(key: key);
+  const MessageCard({Key key, @required this.message}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final _filledCircle = Container(
@@ -19,18 +19,18 @@ class ReviewCard extends StatelessWidget {
 
     final img = GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, resturantDetailsViewRoute,
-            arguments: review.resturantId);
+        Navigator.pushNamed(context, characterDetailsViewRoute,
+            arguments: message.characterId);
       },
       child: Container(
         margin: EdgeInsets.only(right: 10.0),
-        height: 40.0,
-        width: 40.0,
+        height: 55.0,
+        width: 55.0,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12.0),
+          borderRadius: BorderRadius.circular(10.0),
           image: DecorationImage(
             image: AssetImage(
-              review.resturantPhoto,
+              message.characterImage,
             ),
             fit: BoxFit.cover,
           ),
@@ -40,11 +40,11 @@ class ReviewCard extends StatelessWidget {
 
     final _name = InkWell(
       onTap: () {
-        Navigator.pushNamed(context, resturantDetailsViewRoute,
-            arguments: review.resturantId);
+        Navigator.pushNamed(context, characterDetailsViewRoute,
+            arguments: message.characterId);
       },
       child: Text(
-        review.resturantName,
+        message.characterName,
         style: TextStyle(
           fontSize: 16.0,
           fontWeight: FontWeight.bold,
@@ -52,32 +52,10 @@ class ReviewCard extends StatelessWidget {
       ),
     );
 
-    final _location = Row(
-      children: <Widget>[
-        Text(
-          review.location,
-          style: TextStyle(
-            fontSize: 14.0,
-            color: Colors.grey.withOpacity(0.6),
-          ),
-        ),
-        SizedBox(width: 5.0),
-        _filledCircle,
-        SizedBox(width: 5.0),
-        Text(
-          review.resturantType,
-          style: TextStyle(
-            fontSize: 14.0,
-            color: Colors.grey.withOpacity(0.6),
-          ),
-        ),
-      ],
-    );
-
     final _content = Container(
       width: MediaQuery.of(context).size.width * 0.6,
       child: Text(
-        review.content,
+        message.content,
         style: TextStyle(),
       ),
     );
@@ -92,12 +70,11 @@ class ReviewCard extends StatelessWidget {
     final details = Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[_name, _location, _content, _hr],
+        children: <Widget>[_name, _content, _hr],
       ),
     );
 
     return Container(
-      padding: EdgeInsets.only(top: 20.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[img, details],

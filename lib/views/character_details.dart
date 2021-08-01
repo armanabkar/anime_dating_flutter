@@ -1,19 +1,17 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
 import '../utils/utils.dart';
-import './../models/resturant.dart';
+import '../models/character.dart';
 
-class ResturantDetailsPage extends StatelessWidget {
-  final int resturantId;
+class CharacterDetailsPage extends StatelessWidget {
+  final int characterId;
 
-  const ResturantDetailsPage({Key key, @required this.resturantId})
+  const CharacterDetailsPage({Key key, @required this.characterId})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final Resturant resturant =
-        resturants.singleWhere((resturant) => resturant.id == resturantId);
+    final Character character =
+        characters.singleWhere((character) => character.id == characterId);
 
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -28,7 +26,7 @@ class ResturantDetailsPage extends StatelessWidget {
           color: Colors.grey.withOpacity(0.5),
         ),
         child: IconButton(
-          icon: Icon(LineIcons.windowClose, color: Colors.white),
+          icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
           iconSize: 20.0,
         ),
@@ -36,12 +34,12 @@ class ResturantDetailsPage extends StatelessWidget {
     );
 
     final imageBg = Hero(
-      tag: resturant.id,
+      tag: character.id,
       child: Container(
         height: screenHeight * 0.7,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(resturant.photo),
+            image: AssetImage(character.image),
             fit: BoxFit.cover,
           ),
         ),
@@ -58,7 +56,7 @@ class ResturantDetailsPage extends StatelessWidget {
     );
 
     final _name = Text(
-      resturant.name,
+      character.name,
       style: TextStyle(
         color: Colors.white,
         fontSize: 24.0,
@@ -66,10 +64,10 @@ class ResturantDetailsPage extends StatelessWidget {
       ),
     );
 
-    final _location = Row(
+    final _neighborhood = Row(
       children: <Widget>[
         Text(
-          resturant.location,
+          character.neighborhood,
           style: TextStyle(
             fontSize: 18.0,
             color: Colors.white60,
@@ -79,7 +77,7 @@ class ResturantDetailsPage extends StatelessWidget {
         _filledCircle,
         SizedBox(width: 5.0),
         Text(
-          resturant.type,
+          character.type,
           style: TextStyle(
             fontSize: 18.0,
             color: Colors.white60,
@@ -102,7 +100,7 @@ class ResturantDetailsPage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[_name, _location],
+              children: <Widget>[_name, _neighborhood],
             ),
           ),
         ),
@@ -111,7 +109,7 @@ class ResturantDetailsPage extends StatelessWidget {
     final _distance = Container(
       padding: EdgeInsets.only(bottom: 10.0),
       child: Text(
-        resturant.distance,
+        character.distance,
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 15.0,
@@ -123,7 +121,7 @@ class ResturantDetailsPage extends StatelessWidget {
     final _description = Container(
       padding: EdgeInsets.only(bottom: 10.0),
       child: Text(
-        resturant.description,
+        character.description,
         style: TextStyle(
           fontWeight: FontWeight.w500,
           fontSize: 15.0,
