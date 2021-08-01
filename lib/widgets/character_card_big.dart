@@ -44,7 +44,7 @@ class CharacterCardBig extends StatelessWidget {
         _filledCircle,
         SizedBox(width: 5.0),
         Text(
-          character.type,
+          character.age.toString(),
           style: TextStyle(
             fontSize: 18.0,
             color: Colors.white60,

@@ -1,3 +1,4 @@
+import 'package:anime_dating_flutter/models/character.dart';
 import 'package:anime_dating_flutter/utils/colors.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/message_card.dart';
@@ -5,6 +6,8 @@ import '../../models/message.dart';
 import '../../utils/utils.dart';
 
 class AccountPage extends StatelessWidget {
+  final Character character = characters[3];
+
   @override
   Widget build(BuildContext context) {
     final deviceHeight = MediaQuery.of(context).size.height;
@@ -21,7 +24,7 @@ class AccountPage extends StatelessWidget {
           width: 180.0,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(AvailableImages.woman),
+              image: AssetImage(character.image),
               fit: BoxFit.cover,
             ),
             shape: BoxShape.circle,
@@ -57,11 +60,11 @@ class AccountPage extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Text(
-            "Isabella M.",
+            character.name,
             style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w800),
           ),
           Text(
-            "Melbourne, Australia",
+            character.neighborhood,
             style: TextStyle(
               color: Colors.grey.withOpacity(0.9),
               fontSize: 20.0,

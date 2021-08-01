@@ -3,21 +3,49 @@ import '../utils/utils.dart';
 class Character {
   int id;
   String name;
-  int age = 20;
-  String neighborhood = "Richmond";
+  int age;
+  String neighborhood;
   String image;
-  String type;
-  String date = "a week ago";
-  String distance = "5.2km away";
+  String lastSeen = "Last seen: 3h ago";
   String description =
-      "We provide you with food that is fresh, fun and affordable in a relaxed atmosphere where the whole family can enjoy.";
+      "Laborum sit irure dolore quis reprehenderit culpa consequat ea.Laborum sit irure dolore quis reprehenderit culpa consequat ea.Laborum sit irure dolore quis reprehenderit culpa consequat ea.";
 
-  Character(this.id, this.image, this.name, this.type);
+  Character({this.id, this.image, this.name, this.neighborhood, this.age});
+
+  factory Character.fromJson(Map<String, dynamic> json) {
+    return Character(
+      id: json['id'],
+      name: json['name'],
+      age: json['age'],
+      neighborhood: json['neighborhood'],
+      image: json['image'],
+    );
+  }
 }
 
 List<Character> characters = [
-  Character(1, AvailableImages.burger, "The Beer & Burger Bar", "Burger Bar"),
-  Character(2, AvailableImages.gelato, "Gellato Messina", "Mexican"),
-  Character(3, AvailableImages.tacos, "Taco Jill", "Mexican"),
-  Character(4, AvailableImages.cafe, "The Industrial Cafe", "Cafe"),
+  Character(
+      id: 1,
+      image: AvailableImages.KushinaUzumaki,
+      name: "Kushina Uzumaki",
+      neighborhood: "Hidden Leaf Village",
+      age: 24),
+  Character(
+      id: 2,
+      image: AvailableImages.RyukoMatoi,
+      name: "Ryuko Matoi",
+      neighborhood: "Honnōji Academy",
+      age: 17),
+  Character(
+      id: 3,
+      image: AvailableImages.MikasaAckerman,
+      name: "Mikasa Ackerman",
+      neighborhood: "Shiganshina District",
+      age: 19),
+  Character(
+      id: 4,
+      image: AvailableImages.SakuraHaruno,
+      name: "Sakura Haruno",
+      neighborhood: "Hidden Leaf Village",
+      age: 33),
 ];

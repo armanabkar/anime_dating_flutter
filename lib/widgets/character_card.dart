@@ -38,17 +38,7 @@ class CharacterCard extends StatelessWidget {
             fontSize: 12.0,
             color: Colors.white60,
           ),
-        ),
-        SizedBox(width: 5.0),
-        _filledCircle,
-        SizedBox(width: 5.0),
-        Text(
-          character.type,
-          style: TextStyle(
-            fontSize: 12.0,
-            color: Colors.white60,
-          ),
-        ),
+        )
       ],
     );
 
