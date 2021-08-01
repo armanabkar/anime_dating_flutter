@@ -1,0 +1,45 @@
+name: anime_dating_flutter
+description: A new Flutter project.
+
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.11.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  line_icons: ^2.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/woman.jpg
+    - assets/images/burger.jpg
+    - assets/images/cafe.jpg
+    - assets/images/gelato.jpg
+    - assets/images/tacos.jpg
+    - assets/images/iphone.png
+    - assets/images/navigate.png
+    - assets/images/website.png
+    - assets/images/like.png
+    - assets/images/hate.png
+    - assets/images/back.png
+    - assets/images/list.png
+    - assets/images/logo.png
+
+  fonts:
+    - family: Google Font
+      fonts:
+        - asset: assets/fonts/ProductSans-Regular.ttf
+        - asset: assets/fonts/ProductSans-Medium.ttf
+        - asset: assets/fonts/ProductSans-Bold.ttf
