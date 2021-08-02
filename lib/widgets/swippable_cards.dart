@@ -1,6 +1,11 @@
+import 'package:anime_dating_flutter/providers/character.dart';
+import 'package:anime_dating_flutter/providers/provider.dart';
 import 'package:flutter/material.dart';
-import '../widgets/character_card_big.dart';
-import '../models/character.dart';
+import 'package:provider/provider.dart';
+import 'package:swipe_cards/swipe_cards.dart';
+import 'character_card_big.dart';
+
+// TODO: add loading
 
 class SwippableCards extends StatefulWidget {
   @override
@@ -8,117 +13,75 @@ class SwippableCards extends StatefulWidget {
 }
 
 class _SwippableCardsState extends State<SwippableCards> {
-  List<Widget> cardList;
-  List<Character> _charactersCopy = List.from(characters.reversed);
-
-  void _removeCard(index) {
-    setState(() {
-      // Get a copy of item to be removed
-      Character r = _charactersCopy[index];
-
-      // Remove Card from List
-      cardList.removeAt(index);
-
-      // Remove Item from List
-      _charactersCopy.removeAt(index);
-
-      // Insert item back into the list so we have a continous stream of data
-      _charactersCopy.insert(0, r);
-
-      // Rebuild the card list with the new data
-      cardList = _getSwipeCards();
-    });
-  }
+  List<SwipeItem> _swipeItems = [];
+  MatchEngine _matchEngine;
 
   @override
   void initState() {
     super.initState();
-
-    cardList = _getSwipeCards();
+    _swipeItems.shuffle();
+    final fetchedCharacters =
+        Provider.of<CharactersDataProvider>(context, listen: false);
+    fetchedCharacters.getCharactersData(context);
+    _matchEngine = MatchEngine(swipeItems: _swipeItems);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Stack(
-        alignment: Alignment.center,
-        children: cardList,
-      ),
-    );
-  }
+    final fetchedCharacters = Provider.of<CharactersDataProvider>(context);
 
-  List<Widget> _getSwipeCards() {
-    double initTop = 15.0;
-    double initHor = 20.0;
-    double initWidth = 0.9;
-    List<Widget> cardList = new List();
-
-    for (var i = 0; i < _charactersCopy.length; i++) {
-      // var width = initWidth - double.parse("0.$i");
-      var width;
-      if (i == _charactersCopy.length) {
-        width = 0.9;
-      } else if (i == _charactersCopy.length - 1) {
-        width = initWidth - 0.05;
-      } else if (i == _charactersCopy.length - 2) {
-        width = initWidth - 0.1;
-      } else if (i == _charactersCopy.length - 3) {
-        width = initWidth - 0.15;
-      } else {
-        width = initWidth - 0.2;
-      }
-      cardList.add(
-        Positioned(
-          top: initTop * (i + 1),
-          child: Draggable(
-            feedback: Material(
-              borderRadius: BorderRadius.circular(20.0),
-              child: CharacterCardBig(character: _charactersCopy[i]),
-            ),
-            childWhenDragging: Container(),
-            onDragEnd: (drag) {
-              _removeCard(i);
-            },
-            child: Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: initHor - (3 * (i + 1)),
-                vertical: 10.0,
-              ),
-              child: CharacterCardBig(
-                character: _charactersCopy[i],
-                width: width,
-              ),
-            ),
-            data: _charactersCopy[i],
-          ),
+    for (int i = 0; i < fetchedCharacters.characters.length; i++) {
+      _swipeItems.add(
+        SwipeItem(
+          content: Character(
+              id: fetchedCharacters.characters[i].id,
+              name: fetchedCharacters.characters[i].name,
+              image: fetchedCharacters.characters[i].image,
+              age: fetchedCharacters.characters[i].age,
+              neighborhood: fetchedCharacters.characters[i].neighborhood),
         ),
       );
     }
 
-    final footerBtns = Positioned(
-      bottom: 25.0,
-      left: 15.0,
-      right: 15.0,
-      child: Container(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _buildCircularBtn(
-                50.0, Icons.star, Colors.amber, Colors.amber[100], 24, 1),
-            _buildCircularBtn(
-                70.0, Icons.close, Colors.red, Colors.red[100], 34, 2),
-            _buildCircularBtn(
-                70.0, Icons.favorite, Colors.green, Colors.green[100], 34, 3),
-            _buildCircularBtn(
-                50.0, Icons.light, Colors.purple, Colors.purple[100], 24, 4),
-          ],
-        ),
-      ),
+    return Container(
+      child: !fetchedCharacters.loading
+          ? Stack(
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 14.0),
+                  child: SwipeCards(
+                    matchEngine: _matchEngine,
+                    itemBuilder: (BuildContext context, int index) {
+                      return CharacterCardBig(
+                          character: _swipeItems[index].content);
+                    },
+                    onStackFinished: () {},
+                  ),
+                ),
+                Positioned(
+                  bottom: 25.0,
+                  left: 25.0,
+                  right: 25.0,
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        _buildCircularBtn(55.0, Icons.star, Colors.amber,
+                            Colors.amber[100], 24, 1),
+                        _buildCircularBtn(75.0, Icons.close, Colors.red,
+                            Colors.red[100], 34, 2),
+                        _buildCircularBtn(75.0, Icons.favorite, Colors.green,
+                            Colors.green[100], 34, 3),
+                        _buildCircularBtn(55.0, Icons.bolt, Colors.purple,
+                            Colors.purple[100], 24, 4),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            )
+          : Container(),
     );
-
-    cardList.add(footerBtns);
-
-    return cardList;
   }
 
   Widget _buildCircularBtn(double height, IconData icon, Color iconColor,

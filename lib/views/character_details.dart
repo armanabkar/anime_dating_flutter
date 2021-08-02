@@ -1,17 +1,16 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import '../models/character.dart';
+import '../providers/character.dart';
 
+// TODO: hard codded data
 class CharacterDetailsPage extends StatelessWidget {
   final int characterId;
+  final Character character = characters[3];
 
-  const CharacterDetailsPage({Key key, @required this.characterId})
-      : super(key: key);
+  CharacterDetailsPage({Key key, @required this.characterId}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final Character character =
-        characters.singleWhere((character) => character.id == characterId);
-
     final screenHeight = MediaQuery.of(context).size.height;
 
     final cancelBtn = Positioned(
@@ -94,6 +93,7 @@ class CharacterDetailsPage extends StatelessWidget {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
           child: Container(
+            decoration: new BoxDecoration(color: Colors.black.withOpacity(0.2)),
             padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
             height: screenHeight * .1,
             child: Column(

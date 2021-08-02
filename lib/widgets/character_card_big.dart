@@ -1,6 +1,7 @@
 import 'dart:ui';
+import 'package:anime_dating_flutter/utils/constants.dart';
 import 'package:flutter/material.dart';
-import '../models/character.dart';
+import '../providers/character.dart';
 
 class CharacterCardBig extends StatelessWidget {
   final Character character;
@@ -26,7 +27,7 @@ class CharacterCardBig extends StatelessWidget {
       character.name,
       style: TextStyle(
         color: Colors.white,
-        fontSize: 24.0,
+        fontSize: 28.0,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -36,7 +37,7 @@ class CharacterCardBig extends StatelessWidget {
         Text(
           character.neighborhood,
           style: TextStyle(
-            fontSize: 18.0,
+            fontSize: 22.0,
             color: Colors.white60,
           ),
         ),
@@ -46,7 +47,7 @@ class CharacterCardBig extends StatelessWidget {
         Text(
           character.age.toString(),
           style: TextStyle(
-            fontSize: 18.0,
+            fontSize: 20.0,
             color: Colors.white60,
           ),
         ),
@@ -62,6 +63,7 @@ class CharacterCardBig extends StatelessWidget {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
           child: Container(
+            decoration: new BoxDecoration(color: Colors.black.withOpacity(0.2)),
             padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
             height: screenHeight * .15,
             child: Column(
@@ -81,11 +83,11 @@ class CharacterCardBig extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.0),
           elevation: 4.0,
           child: Container(
-            height: screenHeight * 0.6,
+            height: screenHeight * 0.675,
             width: screenWidth * width,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(character.image),
+                image: NetworkImage("${K.baseURL}${character.image}"),
                 fit: BoxFit.cover,
               ),
               borderRadius: BorderRadius.circular(20.0),

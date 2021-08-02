@@ -4,7 +4,6 @@ import 'tabs/search.dart';
 import 'tabs/saved.dart';
 import '../utils/colors.dart';
 
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -14,7 +13,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
-      title: Text("Anime Dating", style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 28.0)),
+      title: Text("Anime Dating",
+          style:
+              TextStyle(color: Theme.of(context).primaryColor, fontSize: 28.0)),
       centerTitle: true,
       bottom: TabBar(
         unselectedLabelColor: unselectedTabLabelColor,

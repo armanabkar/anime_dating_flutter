@@ -1,7 +1,8 @@
 import 'dart:ui';
+import 'package:anime_dating_flutter/utils/constants.dart';
 import 'package:flutter/material.dart';
 import '../router.dart';
-import '../models/character.dart';
+import '../providers/character.dart';
 
 class CharacterCard extends StatelessWidget {
   final Character character;
@@ -25,7 +26,7 @@ class CharacterCard extends StatelessWidget {
       character.name,
       style: TextStyle(
         color: Colors.white,
-        fontSize: 18.0,
+        fontSize: 14.0,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -35,7 +36,7 @@ class CharacterCard extends StatelessWidget {
         Text(
           character.neighborhood,
           style: TextStyle(
-            fontSize: 12.0,
+            fontSize: 10.0,
             color: Colors.white60,
           ),
         )
@@ -51,8 +52,9 @@ class CharacterCard extends StatelessWidget {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
           child: Container(
+            decoration: new BoxDecoration(color: Colors.black.withOpacity(0.2)),
             padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
-            height: screenHeight * .15,
+            height: screenHeight * .1,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,11 +79,11 @@ class CharacterCard extends StatelessWidget {
             tag: character.id,
             child: Container(
               margin: EdgeInsets.only(bottom: 10.0),
-              height: screenHeight * 0.4,
+              height: screenHeight * 0.35,
               width: screenWidth * 0.45,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(character.image),
+                  image: NetworkImage("${K.baseURL}${character.image}"),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.circular(20.0),

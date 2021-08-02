@@ -1,4 +1,4 @@
-import '../utils/utils.dart';
+import '../utils/constants.dart';
 
 class Character {
   int id;
@@ -26,25 +26,25 @@ class Character {
 List<Character> characters = [
   Character(
       id: 1,
-      image: AvailableImages.KushinaUzumaki,
+      image: K.KushinaUzumakiStaticImage,
       name: "Kushina Uzumaki",
       neighborhood: "Hidden Leaf Village",
       age: 24),
   Character(
       id: 2,
-      image: AvailableImages.RyukoMatoi,
+      image: K.RyukoMatoiStaticImage,
       name: "Ryuko Matoi",
       neighborhood: "Honnōji Academy",
       age: 17),
   Character(
       id: 3,
-      image: AvailableImages.MikasaAckerman,
+      image: K.MikasaAckermanStaticImage,
       name: "Mikasa Ackerman",
       neighborhood: "Shiganshina District",
       age: 19),
   Character(
       id: 4,
-      image: AvailableImages.SakuraHaruno,
+      image: K.SakuraHarunoStaticImage,
       name: "Sakura Haruno",
       neighborhood: "Hidden Leaf Village",
       age: 33),

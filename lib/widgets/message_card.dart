@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:anime_dating_flutter/router.dart';
-import '../models/message.dart';
+import '../providers/message.dart';
 
 class MessageCard extends StatelessWidget {
   final Message message;
@@ -55,7 +55,7 @@ class MessageCard extends StatelessWidget {
     final _content = Container(
       width: MediaQuery.of(context).size.width * 0.6,
       child: Text(
-        message.content,
+        message.content.replaceRange(49, message.content.length, '...'),
         style: TextStyle(),
       ),
     );

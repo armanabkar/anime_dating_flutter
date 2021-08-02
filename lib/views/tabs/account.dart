@@ -1,9 +1,10 @@
-import 'package:anime_dating_flutter/models/character.dart';
+import 'package:anime_dating_flutter/providers/character.dart';
 import 'package:anime_dating_flutter/utils/colors.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/message_card.dart';
-import '../../models/message.dart';
-import '../../utils/utils.dart';
+import '../../providers/message.dart';
+
+// TODO: hard codded data
 
 class AccountPage extends StatelessWidget {
   final Character character = characters[3];
@@ -14,7 +15,7 @@ class AccountPage extends StatelessWidget {
     final deviceWidth = MediaQuery.of(context).size.width;
 
     final userImage = Positioned(
-      top: deviceHeight * 0.09,
+      top: deviceHeight * 0.05,
       left: deviceWidth * 0.28,
       child: Material(
         elevation: 4.0,
@@ -54,7 +55,7 @@ class AccountPage extends StatelessWidget {
     );
 
     final userNameAndNeighborhood = Positioned(
-      top: deviceHeight * 0.38,
+      top: deviceHeight * 0.32,
       left: 0,
       right: 0,
       child: Column(
@@ -75,7 +76,7 @@ class AccountPage extends StatelessWidget {
     );
 
     final userImageSection = Container(
-      height: deviceHeight * 0.5,
+      height: deviceHeight * 0.425,
       child: Stack(
         children: <Widget>[
           circle1,
@@ -120,6 +121,7 @@ class AccountPage extends StatelessWidget {
         ],
       ),
     );
+
     return SingleChildScrollView(
       child: Container(
         child: Column(

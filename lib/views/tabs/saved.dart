@@ -1,70 +1,60 @@
+import 'package:anime_dating_flutter/providers/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:anime_dating_flutter/widgets/character_card.dart';
-import '../../models/character.dart';
+import 'package:provider/provider.dart';
 
-class SavedPage extends StatelessWidget {
-  bool isOddNumber(int number) {
-    return number % 2 == 0 ? false : true;
+// TODO: add loading
+
+class SavedPage extends StatefulWidget {
+  @override
+  _SavedPageState createState() => _SavedPageState();
+}
+
+class _SavedPageState extends State<SavedPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    final fetchedCharacters =
+        Provider.of<CharactersDataProvider>(context, listen: false);
+    fetchedCharacters.getCharactersData(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    final _body = SingleChildScrollView(
-      padding: EdgeInsets.only(
-        bottom: 40.0,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              CharacterCard(character: characters[0]),
-              CharacterCard(character: characters[1]),
-            ],
-          ),
-          Column(
-            children: <Widget>[
-              SizedBox(
-                height: 70.0,
-              ),
-              CharacterCard(character: characters[2]),
-              CharacterCard(character: characters[3]),
-            ],
-          ),
-        ],
-      ),
-    );
+    final fetchedCharacters = Provider.of<CharactersDataProvider>(context);
 
-    return _body;
-  }
-
-  Widget buildList() {
-    List<Character> leftSide = [];
-    List<Character> rightSide = [];
-    characters.forEach((character) {
-      int index = characters.indexOf(character);
-      bool isOddNum = isOddNumber(index);
-
-      isOddNum ? rightSide.add(character) : leftSide.add(character);
-    });
-
-    return Row(
-      children: <Widget>[
-        Column(
-          children:
-              leftSide.map((res) => CharacterCard(character: res)).toList(),
-        ),
-        Column(
-          children: rightSide.map((res) {
-            return Column(
+    final _body = !fetchedCharacters.loading
+        ? SingleChildScrollView(
+            padding: EdgeInsets.only(
+              bottom: 40.0,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                SizedBox(height: 70.0),
-                CharacterCard(character: res),
+                Column(
+                  children: <Widget>[
+                    CharacterCard(character: fetchedCharacters.characters[0]),
+                    CharacterCard(character: fetchedCharacters.characters[1]),
+                    CharacterCard(character: fetchedCharacters.characters[2]),
+                    CharacterCard(character: fetchedCharacters.characters[3]),
+                  ],
+                ),
+                Column(
+                  children: <Widget>[
+                    SizedBox(
+                      height: 70.0,
+                    ),
+                    CharacterCard(character: fetchedCharacters.characters[4]),
+                    CharacterCard(character: fetchedCharacters.characters[5]),
+                    CharacterCard(character: fetchedCharacters.characters[6]),
+                    CharacterCard(character: fetchedCharacters.characters[7]),
+                  ],
+                ),
               ],
-            );
-          }).toList(),
-        ),
-      ],
-    );
+            ),
+          )
+        : Container();
+    return _body;
   }
 }
