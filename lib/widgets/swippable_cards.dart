@@ -1,11 +1,10 @@
 import 'package:anime_dating_flutter/providers/character.dart';
 import 'package:anime_dating_flutter/providers/provider.dart';
+import 'package:anime_dating_flutter/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:swipe_cards/swipe_cards.dart';
 import 'character_card_big.dart';
-
-// TODO: add loading
 
 class SwippableCards extends StatefulWidget {
   @override
@@ -80,7 +79,11 @@ class _SwippableCardsState extends State<SwippableCards> {
                 )
               ],
             )
-          : Container(),
+          : Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Loading()],
+            ),
     );
   }
 

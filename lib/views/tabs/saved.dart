@@ -1,9 +1,8 @@
 import 'package:anime_dating_flutter/providers/provider.dart';
+import 'package:anime_dating_flutter/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:anime_dating_flutter/widgets/character_card.dart';
 import 'package:provider/provider.dart';
-
-// TODO: add loading
 
 class SavedPage extends StatefulWidget {
   @override
@@ -54,7 +53,11 @@ class _SavedPageState extends State<SavedPage> {
               ],
             ),
           )
-        : Container();
+        : Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [Loading()],
+          );
     return _body;
   }
 }
