@@ -1,16 +1,26 @@
-import 'package:anime_dating_flutter/providers/character.dart';
+import 'package:anime_dating_flutter/providers/provider.dart';
 import 'package:anime_dating_flutter/utils/colors.dart';
+import 'package:anime_dating_flutter/utils/constants.dart';
+import 'package:anime_dating_flutter/widgets/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../widgets/message_card.dart';
-import '../../providers/message.dart';
-
-// TODO: hard codded data
+import 'dart:math';
 
 class AccountPage extends StatelessWidget {
-  final Character character = characters[3];
+  final Random random = new Random();
+  static List<String> messages = [
+    "I will go back to Gotham and I will fight men Iike this but I will not become an executioner.",
+    "Someone like you. Someone who'll rattle the cages.",
+    "Oh, hee-hee, aha. Ha, ooh, hee, ha-ha, ha-ha. And I thought my jokes were bad.",
+    "Bats frighten me. It's time my enemies shared my dread.",
+    "It's not who I am underneath but what I do that defines me.",
+    "You have nothing, nothing to threaten me with. Nothing to do with all your strength.",
+  ];
 
   @override
   Widget build(BuildContext context) {
+    final fetchedCharacters = Provider.of<CharactersDataProvider>(context);
     final deviceHeight = MediaQuery.of(context).size.height;
     final deviceWidth = MediaQuery.of(context).size.width;
 
@@ -25,12 +35,13 @@ class AccountPage extends StatelessWidget {
           width: 180.0,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(character.image),
+              image: NetworkImage(
+                  "${K.baseURL}${fetchedCharacters.characters[20].image}"),
               fit: BoxFit.cover,
             ),
             shape: BoxShape.circle,
             border: Border.all(
-              color: primaryColor,
+              color: appBarColor,
               width: 5.0,
             ),
           ),
@@ -55,17 +66,17 @@ class AccountPage extends StatelessWidget {
     );
 
     final userNameAndNeighborhood = Positioned(
-      top: deviceHeight * 0.32,
+      top: deviceHeight * 0.3,
       left: 0,
       right: 0,
       child: Column(
         children: <Widget>[
           Text(
-            character.name,
+            fetchedCharacters.characters[20].name,
             style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w800),
           ),
           Text(
-            character.neighborhood,
+            fetchedCharacters.characters[20].neighborhood,
             style: TextStyle(
               color: Colors.grey.withOpacity(0.9),
               fontSize: 20.0,
@@ -90,8 +101,14 @@ class AccountPage extends StatelessWidget {
 
     final br = Radius.circular(30.0);
 
-    final messageList =
-        messages.map((message) => MessageCard(message: message)).toList();
+    final messageList = messages
+        .map(
+          (message) => MessageCard(
+            message: message,
+            character: fetchedCharacters.characters[random.nextInt(32) + 1],
+          ),
+        )
+        .toList();
 
     final chatSection = Container(
       padding: EdgeInsets.only(top: 30.0, left: 30.0),
@@ -122,13 +139,19 @@ class AccountPage extends StatelessWidget {
       ),
     );
 
-    return SingleChildScrollView(
-      child: Container(
-        child: Column(
-          children: <Widget>[userImageSection, chatSection],
-        ),
-      ),
-    );
+    return !fetchedCharacters.loading
+        ? SingleChildScrollView(
+            child: Container(
+              child: Column(
+                children: <Widget>[userImageSection, chatSection],
+              ),
+            ),
+          )
+        : Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [Loading()],
+          );
   }
 
   Widget _buildGradientCircle(double size) {

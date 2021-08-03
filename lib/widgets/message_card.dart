@@ -1,26 +1,21 @@
+import 'package:anime_dating_flutter/providers/character.dart';
+import 'package:anime_dating_flutter/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:anime_dating_flutter/router.dart';
-import '../providers/message.dart';
 
 class MessageCard extends StatelessWidget {
-  final Message message;
+  final String message;
+  final Character character;
 
-  const MessageCard({Key key, @required this.message}) : super(key: key);
+  const MessageCard({Key key, @required this.character, @required this.message})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final _filledCircle = Container(
-      height: 4.0,
-      width: 4.0,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.grey.withOpacity(0.6),
-      ),
-    );
-
     final img = GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, characterDetailsViewRoute,
-            arguments: message.characterId);
+            arguments: character.id);
       },
       child: Container(
         margin: EdgeInsets.only(right: 10.0),
@@ -29,9 +24,7 @@ class MessageCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           image: DecorationImage(
-            image: AssetImage(
-              message.characterImage,
-            ),
+            image: NetworkImage("${K.baseURL}${character.image}"),
             fit: BoxFit.cover,
           ),
         ),
@@ -41,10 +34,10 @@ class MessageCard extends StatelessWidget {
     final _name = InkWell(
       onTap: () {
         Navigator.pushNamed(context, characterDetailsViewRoute,
-            arguments: message.characterId);
+            arguments: character.id);
       },
       child: Text(
-        message.characterName,
+        character.name,
         style: TextStyle(
           fontSize: 16.0,
           fontWeight: FontWeight.bold,
@@ -55,7 +48,7 @@ class MessageCard extends StatelessWidget {
     final _content = Container(
       width: MediaQuery.of(context).size.width * 0.6,
       child: Text(
-        message.content.replaceRange(49, message.content.length, '...'),
+        message.replaceRange(49, message.length, '...'),
         style: TextStyle(),
       ),
     );

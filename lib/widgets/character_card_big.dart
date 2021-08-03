@@ -83,7 +83,7 @@ class CharacterCardBig extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.0),
           elevation: 4.0,
           child: Container(
-            height: screenHeight * 0.675,
+            height: screenHeight,
             width: screenWidth * width,
             decoration: BoxDecoration(
               image: DecorationImage(

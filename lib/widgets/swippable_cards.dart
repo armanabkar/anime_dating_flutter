@@ -47,7 +47,7 @@ class _SwippableCardsState extends State<SwippableCards> {
           ? Stack(
               children: [
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 14.0),
+                  margin: EdgeInsets.symmetric(vertical: 20.0),
                   child: SwipeCards(
                     matchEngine: _matchEngine,
                     itemBuilder: (BuildContext context, int index) {
@@ -57,26 +57,6 @@ class _SwippableCardsState extends State<SwippableCards> {
                     onStackFinished: () {},
                   ),
                 ),
-                Positioned(
-                  bottom: 25.0,
-                  left: 25.0,
-                  right: 25.0,
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        _buildCircularBtn(55.0, Icons.star, Colors.amber,
-                            Colors.amber[100], 24, 1),
-                        _buildCircularBtn(75.0, Icons.close, Colors.red,
-                            Colors.red[100], 34, 2),
-                        _buildCircularBtn(75.0, Icons.favorite, Colors.green,
-                            Colors.green[100], 34, 3),
-                        _buildCircularBtn(55.0, Icons.bolt, Colors.purple,
-                            Colors.purple[100], 24, 4),
-                      ],
-                    ),
-                  ),
-                )
               ],
             )
           : Row(

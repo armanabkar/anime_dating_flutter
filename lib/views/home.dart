@@ -1,3 +1,4 @@
+import 'package:anime_dating_flutter/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'tabs/account.dart';
 import 'tabs/search.dart';
@@ -13,9 +14,16 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final appBar = AppBar(
-      title: Text("Anime Dating",
+      title: GestureDetector(
+        onTap: () {
+          // TODO - add Dialgo box for suggestion
+        },
+        child: Text(
+          K.appName,
           style:
-              TextStyle(color: Theme.of(context).primaryColor, fontSize: 28.0)),
+              TextStyle(color: Theme.of(context).primaryColor, fontSize: 30.0),
+        ),
+      ),
       centerTitle: true,
       bottom: TabBar(
         unselectedLabelColor: unselectedTabLabelColor,

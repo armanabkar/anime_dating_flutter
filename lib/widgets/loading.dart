@@ -7,6 +7,6 @@ class Loading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SpinKitDoubleBounce(color: primaryColor, size: 100.0);
+    return SpinKitPumpingHeart(color: primaryColor, size: 150.0);
   }
 }

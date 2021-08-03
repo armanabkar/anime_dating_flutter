@@ -1,16 +1,20 @@
 import 'dart:ui';
+import 'package:anime_dating_flutter/providers/provider.dart';
+import 'package:anime_dating_flutter/utils/constants.dart';
+import 'package:anime_dating_flutter/widgets/loading.dart';
 import 'package:flutter/material.dart';
-import '../providers/character.dart';
+import 'package:provider/provider.dart';
 
-// TODO: hard codded data
 class CharacterDetailsPage extends StatelessWidget {
   final int characterId;
-  final Character character = characters[3];
 
   CharacterDetailsPage({Key key, @required this.characterId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final fetchedCharacters = Provider.of<CharactersDataProvider>(context);
+    final character = fetchedCharacters.characters
+        .firstWhere((char) => char.id == characterId);
     final screenHeight = MediaQuery.of(context).size.height;
 
     final cancelBtn = Positioned(
@@ -37,7 +41,7 @@ class CharacterDetailsPage extends StatelessWidget {
         height: screenHeight * 0.8,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(character.image),
+            image: NetworkImage("${K.baseURL}${character.image}"),
             fit: BoxFit.cover,
           ),
         ),
@@ -152,21 +156,27 @@ class CharacterDetailsPage extends StatelessWidget {
     );
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Stack(
-              children: <Widget>[
-                Container(height: screenHeight),
-                imageBg,
-                cancelBtn,
-                _details,
-                secondSection
-              ],
+      body: !fetchedCharacters.loading
+          ? SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Stack(
+                    children: <Widget>[
+                      Container(height: screenHeight),
+                      imageBg,
+                      cancelBtn,
+                      _details,
+                      secondSection
+                    ],
+                  ),
+                ],
+              ),
+            )
+          : Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [Loading()],
             ),
-          ],
-        ),
-      ),
     );
   }
 }

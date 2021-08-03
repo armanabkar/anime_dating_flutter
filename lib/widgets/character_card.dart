@@ -13,15 +13,6 @@ class CharacterCard extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
-    final _filledCircle = Container(
-      height: 4.0,
-      width: 4.0,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white60,
-      ),
-    );
-
     final _name = Text(
       character.name,
       style: TextStyle(

@@ -25,11 +25,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  assets:
-    - assets/images/kushinauzumaki.png
-    - assets/images/mikasaackerman.png
-    - assets/images/ryukomatoi.jpg
-    - assets/images/sakuraharuno.jpg
+  # assets:
 
   fonts:
     - family: Google Font
