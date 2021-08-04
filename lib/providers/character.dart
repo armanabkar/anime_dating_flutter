@@ -6,7 +6,7 @@ class Character {
   String image;
   String lastSeen = "Last seen: 3h ago";
   String description =
-      "Laborum sit irure dolore quis reprehenderit culpa consequat ea.Laborum sit irure dolore quis reprehenderit culpa consequat ea.Laborum sit irure dolore quis reprehenderit culpa consequat ea.";
+      "Laborum sit irure dolore quis reprehenderit culpa consequat ea.Laborum sit irure dolore quis reprehenderit culpa consequat ea.";
 
   Character({this.id, this.image, this.name, this.neighborhood, this.age});
 

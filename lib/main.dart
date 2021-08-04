@@ -14,7 +14,7 @@ void main() {
 }
 
 List<SingleChildWidget> providers = [
-  ChangeNotifierProvider<CharactersDataProvider>(
-    create: (_) => CharactersDataProvider(),
+  ChangeNotifierProvider<DataProvider>(
+    create: (_) => DataProvider(),
   ),
 ];

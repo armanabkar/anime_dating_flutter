@@ -7,6 +7,12 @@ class Loading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SpinKitPumpingHeart(color: primaryColor, size: 150.0);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SpinKitPumpingHeart(color: primaryColor, size: 150.0),
+      ],
+    );
   }
 }

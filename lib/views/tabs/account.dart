@@ -20,23 +20,20 @@ class AccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fetchedCharacters = Provider.of<CharactersDataProvider>(context);
+    final provider = Provider.of<DataProvider>(context);
     final deviceHeight = MediaQuery.of(context).size.height;
-    final deviceWidth = MediaQuery.of(context).size.width;
 
-    final userImage = Positioned(
-      top: deviceHeight * 0.05,
-      left: deviceWidth * 0.28,
+    final userImage = Container(
       child: Material(
         elevation: 4.0,
         shape: CircleBorder(),
         child: Container(
-          height: 180.0,
-          width: 180.0,
+          height: 200.0,
+          width: 200.0,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: NetworkImage(
-                  "${K.baseURL}${fetchedCharacters.characters[20].image}"),
+              image:
+                  NetworkImage("${K.baseURL}${provider.characters[20].image}"),
               fit: BoxFit.cover,
             ),
             shape: BoxShape.circle,
@@ -49,37 +46,20 @@ class AccountPage extends StatelessWidget {
       ),
     );
 
-    final circle1 = Positioned(
-      top: deviceHeight * 0.09,
-      right: deviceWidth * 0.18,
-      child: _buildGradientCircle(90.0),
-    );
-    final circle2 = Positioned(
-      top: deviceHeight * 0.17,
-      left: deviceWidth * 0.13,
-      child: _buildGradientCircle(70.0),
-    );
-    final circle3 = Positioned(
-      top: deviceHeight * 0.29,
-      right: deviceWidth * 0.33,
-      child: _buildGradientCircle(40.0),
-    );
-
-    final userNameAndNeighborhood = Positioned(
-      top: deviceHeight * 0.3,
-      left: 0,
-      right: 0,
+    final userNameAndNeighborhood = Container(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Text(
-            fetchedCharacters.characters[20].name,
+            provider.characters[20].name,
             style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.w800),
           ),
           Text(
-            fetchedCharacters.characters[20].neighborhood,
+            provider.characters[20].neighborhood,
             style: TextStyle(
               color: Colors.grey.withOpacity(0.9),
-              fontSize: 20.0,
+              fontSize: 22.0,
             ),
           ),
         ],
@@ -87,14 +67,14 @@ class AccountPage extends StatelessWidget {
     );
 
     final userImageSection = Container(
-      height: deviceHeight * 0.425,
-      child: Stack(
-        children: <Widget>[
-          circle1,
-          circle2,
-          circle3,
+      margin: EdgeInsets.symmetric(vertical: 25),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
           userImage,
-          userNameAndNeighborhood
+          SizedBox(height: 22.5),
+          userNameAndNeighborhood,
         ],
       ),
     );
@@ -105,19 +85,20 @@ class AccountPage extends StatelessWidget {
         .map(
           (message) => MessageCard(
             message: message,
-            character: fetchedCharacters.characters[random.nextInt(32) + 1],
+            character: provider
+                .characters[random.nextInt(provider.characters.length - 1) + 1],
           ),
         )
         .toList();
 
-    final chatSection = Container(
+    final messagesSection = Container(
       padding: EdgeInsets.only(top: 30.0, left: 30.0),
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(topRight: br, topLeft: br),
       ),
-      constraints: BoxConstraints(minHeight: deviceHeight / 2),
+      constraints: BoxConstraints(minHeight: deviceHeight * 0.4),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -139,36 +120,14 @@ class AccountPage extends StatelessWidget {
       ),
     );
 
-    return !fetchedCharacters.loading
+    return !provider.loading
         ? SingleChildScrollView(
             child: Container(
               child: Column(
-                children: <Widget>[userImageSection, chatSection],
+                children: <Widget>[userImageSection, messagesSection],
               ),
             ),
           )
-        : Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [Loading()],
-          );
-  }
-
-  Widget _buildGradientCircle(double size) {
-    return Container(
-      height: size,
-      width: size,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: LinearGradient(
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-          colors: [
-            Color(0xFFECF9E8),
-            Color(0xFFE6F6EF),
-          ],
-        ),
-      ),
-    );
+        : Loading();
   }
 }

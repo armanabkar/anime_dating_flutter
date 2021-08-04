@@ -10,4 +10,4 @@ const primaryGradient = const LinearGradient(
 
 const scaffoldColor = Color(0xFFF9F9F9);
 const appBarColor = Color(0xFFFFFFFF);
-const unselectedTabLabelColor = Color(0xFFC6CED3);
+const unselectedTabLabelColor = Color(0xFFffd5dd);

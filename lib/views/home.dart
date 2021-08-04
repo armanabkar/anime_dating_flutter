@@ -1,8 +1,12 @@
+import 'package:anime_dating_flutter/providers/provider.dart';
 import 'package:anime_dating_flutter/utils/constants.dart';
+import 'package:anime_dating_flutter/utils/suggestion_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'tabs/account.dart';
 import 'tabs/search.dart';
 import 'tabs/saved.dart';
+import 'dart:math';
 import '../utils/colors.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,12 +15,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  static Random random = new Random();
+
+  @override
+  void initState() {
+    super.initState();
+
+    final provider = Provider.of<DataProvider>(context, listen: false);
+    provider.getSuggestionData(context);
+    provider.getCharactersData(context);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<DataProvider>(context);
+
     final appBar = AppBar(
       title: GestureDetector(
         onTap: () {
-          // TODO - add Dialgo box for suggestion
+          showSuggestionDialog(
+              context,
+              provider.suggestions[
+                  random.nextInt(provider.suggestions.length - 1) + 0]);
         },
         child: Text(
           K.appName,

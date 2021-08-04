@@ -11,6 +11,17 @@ Future<List<Character>> fetchCharacters(context) async {
 
     return parsed.map<Character>((json) => Character.fromJson(json)).toList();
   } else {
-    throw Exception('Failed to load album');
+    throw Exception('Failed to fetch characters');
+  }
+}
+
+Future<List<String>> fetchSuggestions(context) async {
+  final response = await http.get(Uri.parse(K.suggestionsURL));
+
+  if (response.statusCode == 200) {
+    final parsed = json.decode(response.body).cast<String>();
+    return parsed.toList();
+  } else {
+    throw Exception('Failed to fetch suggestions');
   }
 }

@@ -12,9 +12,9 @@ class CharacterDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final fetchedCharacters = Provider.of<CharactersDataProvider>(context);
-    final character = fetchedCharacters.characters
-        .firstWhere((char) => char.id == characterId);
+    final provider = Provider.of<DataProvider>(context);
+    final character =
+        provider.characters.firstWhere((char) => char.id == characterId);
     final screenHeight = MediaQuery.of(context).size.height;
 
     final cancelBtn = Positioned(
@@ -61,7 +61,7 @@ class CharacterDetailsPage extends StatelessWidget {
       character.name,
       style: TextStyle(
         color: Colors.white,
-        fontSize: 24.0,
+        fontSize: 26.0,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -71,7 +71,7 @@ class CharacterDetailsPage extends StatelessWidget {
         Text(
           character.neighborhood,
           style: TextStyle(
-            fontSize: 18.0,
+            fontSize: 20.0,
             color: Colors.white60,
           ),
         ),
@@ -81,7 +81,7 @@ class CharacterDetailsPage extends StatelessWidget {
         Text(
           character.age.toString(),
           style: TextStyle(
-            fontSize: 18.0,
+            fontSize: 20.0,
             color: Colors.white60,
           ),
         ),
@@ -89,7 +89,7 @@ class CharacterDetailsPage extends StatelessWidget {
     );
 
     final _details = Positioned(
-      top: screenHeight * 0.66,
+      top: screenHeight * 0.63,
       left: 10.0,
       right: 10.0,
       child: ClipRRect(
@@ -99,7 +99,7 @@ class CharacterDetailsPage extends StatelessWidget {
           child: Container(
             decoration: new BoxDecoration(color: Colors.black.withOpacity(0.2)),
             padding: EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
-            height: screenHeight * .1,
+            height: screenHeight * .13,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,20 +110,19 @@ class CharacterDetailsPage extends StatelessWidget {
       ),
     );
 
-    final _distance = Container(
+    final _lastSeen = Container(
       padding: EdgeInsets.only(bottom: 10.0),
       child: Text(
         character.lastSeen,
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 15.0,
-          color: Colors.blueGrey,
+          color: Colors.grey,
         ),
       ),
     );
 
     final _description = Container(
-      padding: EdgeInsets.only(bottom: 10.0),
       child: Text(
         character.description,
         style: TextStyle(
@@ -150,13 +149,13 @@ class CharacterDetailsPage extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[_distance, _description],
+          children: <Widget>[_lastSeen, _description],
         ),
       ),
     );
 
     return Scaffold(
-      body: !fetchedCharacters.loading
+      body: !provider.loading
           ? SingleChildScrollView(
               child: Column(
                 children: <Widget>[
@@ -172,11 +171,7 @@ class CharacterDetailsPage extends StatelessWidget {
                 ],
               ),
             )
-          : Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [Loading()],
-            ),
+          : Loading(),
     );
   }
 }
