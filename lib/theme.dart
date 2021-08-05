@@ -8,6 +8,7 @@ ThemeData buildThemeData() {
 
   return baseTheme.copyWith(
       primaryColor: primaryColor,
+      accentColor: primaryColor,
       scaffoldBackgroundColor: scaffoldColor,
       appBarTheme: AppBarTheme(color: appBarColor));
 }
